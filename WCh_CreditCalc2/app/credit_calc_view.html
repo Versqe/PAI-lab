@@ -1,0 +1,50 @@
+{extends file="../templates/main.html"}
+
+{block name=content}
+<div class="form-container">
+    <header>
+        <h2>OBLICZ RATĘ</h2>
+    </header>
+
+    <section>
+        <form action="{$app_url}/app/credit_calc.php#main" method="post">
+            <div class="fields">
+                <div class="field">
+                    <label for="kwota">Kwota kredytu (zł):</label>
+                    <input type="text" name="kwota" id="kwota" value="{$form['kwota']}" placeholder="np. 100000" />
+                </div>
+                <div class="field half">
+                    <label for="lata">Okres kredytowania (lata):</label>
+                    <input type="text" name="lata" id="lata" value="{$form['lata']}" placeholder="np. 5" />
+                </div>
+                <div class="field half">
+                    <label for="oprocentowanie">Oprocentowanie (%):</label>
+                    <input type="text" name="oprocentowanie" id="oprocentowanie" value="{$form['oprocentowanie']}" placeholder="np. 8.5" />
+                </div>
+            </div>
+            
+            <ul class="actions" style="margin-top: 2em; text-align: center; justify-content: center; display: flex;">
+                <li><input type="submit" value="Oblicz ratę" class="primary" style="padding: 0 3em;" /></li>
+            </ul>
+        </form>
+
+        {if isset($messages) && count($messages) > 0}
+            <div style="background-color: rgba(255, 0, 0, 0.1); border: 1px solid #ff4444; color: #ffaaaa; padding: 15px; border-radius: 5px; margin-top: 20px;">
+                <h4 style="color: #ff6666; margin-bottom: 10px;">Wystąpiły błędy:</h4>
+                <ul style="margin-bottom: 0;">
+                {foreach $messages as $msg}
+                    <li>{$msg}</li>
+                {/foreach}
+                </ul>
+            </div>
+        {/if}
+
+        {if isset($result)}
+            <div style="background-color: rgba(0, 255, 0, 0.1); border: 1px solid #44ff44; color: #aaffaa; padding: 20px; border-radius: 5px; text-align: center; font-size: 1.2em; margin-top: 20px;">
+                Twoja miesięczna rata wynosi:<br/>
+                <strong style="font-size: 1.8em; color: #ffffff;">{$result|string_format:"%.2f"} zł</strong>
+            </div>
+        {/if}
+    </section>
+</div>
+{/block}
